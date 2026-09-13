@@ -1,0 +1,82 @@
+function Footer() {
+  return (
+    <footer className="bg-black px-44 py-16 font-poppins text-white">
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-3xl font-semibold tracking-tight">Gosra.</h2>
+
+          <p className="mt-4 max-w-sm text-sm leading-6 text-gray-400">
+            Simple conversations. Real connections.
+          </p>
+        </div>
+
+        <div className="flex gap-20">
+          <div>
+            <h3 className="mb-5 text-sm font-medium text-gray-400">Explore</h3>
+
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a
+                  href="#home"
+                  className="transition-colors hover:text-gray-400"
+                >
+                  Home
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="#features"
+                  className="transition-colors hover:text-gray-400"
+                >
+                  Features
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="#about"
+                  className="transition-colors hover:text-gray-400"
+                >
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-5 text-sm font-medium text-gray-400">Connect</h3>
+
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a
+                  href="#contact"
+                  className="transition-colors hover:text-gray-400"
+                >
+                  Contact
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="#github"
+                  className="transition-colors hover:text-gray-400"
+                >
+                  GitHub
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-16 border-t border-gray-800 pt-6">
+        <p className="text-sm text-gray-500">
+          © 2026 Gosra. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+export default Footer;
