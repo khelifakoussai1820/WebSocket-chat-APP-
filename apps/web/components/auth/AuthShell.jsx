@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import Logo from "@/components/logo";
+import { useRouter } from "next/navigation";
 
 const fieldClass =
   "mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-black outline-none transition placeholder:text-gray-400 focus:border-black";
@@ -21,6 +22,7 @@ function Field({ label, error, children }) {
 
 export default function AuthShell({ mode }) {
   const isSignup = mode === "signup";
+  const router = useRouter();
 
   const {
     register,
@@ -44,6 +46,11 @@ export default function AuthShell({ mode }) {
 
       if (!response.ok) {
         console.error(result.error);
+        return;
+      }
+
+      if (isSignup) {
+        router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
         return;
       }
 

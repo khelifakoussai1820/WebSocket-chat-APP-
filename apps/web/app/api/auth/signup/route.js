@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { generateOTP, getOtpExpiration } from "@/services/otp";
+import { sendVerificationEmail } from "@/services/mail";
 
 export async function POST(request) {
   try {
@@ -53,6 +55,21 @@ export async function POST(request) {
         password: hashedPassword,
       },
     });
+
+    const code = generateOTP();
+    const expiresAt = getOtpExpiration();
+
+    await prisma.emailVerification.create({
+      data: {
+        userId: user.id,
+        code,
+        expiresAt,
+      },
+    });
+
+    await sendVerificationEmail(user.email, code);
+
+    console.log("OTP : ", code);
 
     return NextResponse.json(
       {
