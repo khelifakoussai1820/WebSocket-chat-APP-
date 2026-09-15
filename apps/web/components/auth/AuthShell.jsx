@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import Logo from "@/components/logo";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const fieldClass =
   "mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm text-black outline-none transition placeholder:text-gray-400 focus:border-black";
@@ -34,29 +35,41 @@ export default function AuthShell({ mode }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      if (isSignup) {
+        const response = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          console.error(result.error);
+          return;
+        }
+
+        router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
+
+        return;
+      }
+
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        console.error(result.error);
+      if (result?.error) {
+        console.error("Invalid email or password");
         return;
       }
 
-      if (isSignup) {
-        router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
-        return;
-      }
-
-      console.log("Account Created", result);
+      router.push("/chat");
     } catch (error) {
-      console.error("Signup error ", error);
+      console.error("Authentication error:", error);
     }
   };
 
