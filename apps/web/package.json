@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "socket": "node socket/src/server.js"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",

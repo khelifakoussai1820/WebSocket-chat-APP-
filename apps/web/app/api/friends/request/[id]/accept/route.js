@@ -3,8 +3,6 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { error } from "node:console";
-import { stat } from "node:fs";
 
 export async function POST(request, { params }) {
   try {
@@ -22,7 +20,7 @@ export async function POST(request, { params }) {
     }
 
     const userId = Number(session.user.id);
-    const requestId = Number(params.id);
+    const requestId = Number((await params).id);
 
     if (!Number.isInteger(requestId) || requestId <= 0) {
       return NextResponse.json(

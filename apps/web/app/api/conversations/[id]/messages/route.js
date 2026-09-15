@@ -119,14 +119,15 @@ export async function POST(request, { params }) {
       );
     }
 
-    const body = await request.json(
-      {
-        error: "Message content is required",
-      },
-      {
-        status: 400,
-      },
-    );
+    const body = await request.json();
+    const content = body.content?.trim();
+
+    if (!content) {
+      return NextResponse.json(
+        { error: "Message content is required" },
+        { status: 400 },
+      );
+    }
 
     const message = await prisma.message.create({
       data: {

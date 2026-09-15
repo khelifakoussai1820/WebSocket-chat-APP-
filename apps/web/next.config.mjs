@@ -2,6 +2,11 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
+  turbopack: {
+    resolveAlias: {
+      "@/*": "./*",
+    },
+  },
 };
 
 export default nextConfig;

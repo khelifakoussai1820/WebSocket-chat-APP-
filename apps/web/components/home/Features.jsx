@@ -59,19 +59,23 @@ function Features() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="min-h-screen px-44 py-32 font-poppins">
+    <section
+      ref={sectionRef}
+      id="feature"
+      className="min-h-screen px-6 py-16 font-poppins sm:px-12 lg:px-20 lg:py-32 xl:px-44"
+    >
       <div className="features-header max-auto">
-        <h1 className="text-5xl font-semibold text-center tracking-tight">
+        <h1 className="text-3xl font-semibold text-center tracking-tight sm:text-4xl lg:text-5xl">
           Everything you need for better conversations
         </h1>
 
-        <p className="mt-5 text-lg leading-8 text-center text-gray-500">
+        <p className="mt-5 text-base leading-8 text-center text-gray-500 sm:text-lg">
           Gosra gives you all the tools to stay connected, whether it&apos;s
           with your friends, your community or your team.
         </p>
       </div>
 
-      <div className="features-list mt-24">
+      <div className="features-list mt-12 lg:mt-24">
         {FeaturesDetails.map((feature, index) => (
           <Card
             key={index}
@@ -89,13 +93,13 @@ export default Features;
 
 export function Card({ index, feature, desc }) {
   return (
-    <div className="feature-item grid grid-cols-[80px_1fr] gap-8 border-t border-gray-200 py-8">
+    <div className="feature-item grid grid-cols-[72px_1fr] gap-4 border-t border-gray-200 py-8 sm:grid-cols-[80px_1fr] sm:gap-8">
       <span className="text-sm text-gray-400">
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      <div className="grid grid-cols-2 gap-12">
-        <h2 className="text-2xl font-medium tracking-tight">{feature}</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-12">
+        <h2 className="text-xl font-medium tracking-tight sm:text-2xl">{feature}</h2>
 
         <p className="max-w-md text-gray-500 leading-7">{desc}</p>
       </div>

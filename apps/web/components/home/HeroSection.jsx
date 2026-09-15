@@ -42,30 +42,30 @@ function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  return (
-    <section className="font-poppins  min-h-screen bg-gray-100 flex items-center">
-      <main className="grid grid-cols-2 mx-44 items-center gap-16 w-full">
+return (
+    <section className="font-poppins  min-h-screen bg-gray-100 flex items-center overflow-hidden">
+      <main className="grid grid-cols-1 items-center gap-12 px-6 py-24 w-full md:grid-cols-2 md:gap-16 sm:px-12 lg:px-20 xl:mx-auto xl:max-w-7xl">
         <div className="max-w-2xl">
-          <h1 className="text-6xl font-bold leading-[1.05] tracking-tight">
+          <h1 className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
             Talk freely.
           </h1>
 
-          <h2 className="mt-2 text-5xl font-semibold leading-tight text-gray-500">
+          <h2 className="mt-2 text-3xl font-semibold leading-tight text-gray-500 sm:text-4xl lg:text-5xl">
             Connect instantly.
           </h2>
 
-          <p className="mt-6 max-w-xl text-lg leading-8 text-gray-600">
+          <p className="mt-6 max-w-xl text-base leading-8 text-gray-600 sm:text-lg">
             Gosra is a real-time messaging platform built to bring people
             together through simple text and meaningful conversations.
           </p>
 
-          <div className="mt-8 flex items-center gap-4">
-            <PrimaryButtons path="/" ButtonText="Start Talking Now" />
-            <SecondaryButtons path="/" ButtonText="Explore More" />
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <PrimaryButtons path="/signup" ButtonText="Start Talking Now" />
+            <SecondaryButtons path="#feature" ButtonText="Explore More" />
           </div>
         </div>
 
-        <div ref={visualRef} className="relative h-[500px] w-full">
+        <div ref={visualRef} className="relative hidden h-[500px] w-full md:block">
           {/* Conversation bubbles */}
 
           <div className="message-bubble absolute left-8 top-20 rounded-2xl rounded-bl-sm bg-black px-6 py-4 text-sm text-white shadow-lg">

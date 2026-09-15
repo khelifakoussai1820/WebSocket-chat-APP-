@@ -2,9 +2,10 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { Suspense } from "react";
 import Logo from "@/components/logo";
 
-export default function VerifyEmailPage() {
+function VerifyEmailForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -52,7 +53,7 @@ export default function VerifyEmailPage() {
 
           <p className="text-sm font-medium text-gray-500">VERIFY YOUR EMAIL</p>
 
-          <h1 className="mt-2 text-4xl font-semibold tracking-tight text-black">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-black sm:text-4xl">
             Check your inbox
           </h1>
 
@@ -103,5 +104,13 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-gray-100" />}>
+      <VerifyEmailForm />
+    </Suspense>
   );
 }

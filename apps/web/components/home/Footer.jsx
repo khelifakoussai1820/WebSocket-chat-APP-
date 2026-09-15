@@ -1,16 +1,18 @@
 function Footer() {
   return (
-    <footer className="bg-black px-44 py-16 font-poppins text-white">
-      <div className="flex items-start justify-between">
+    <footer className="bg-black px-6 py-12 font-poppins text-white sm:px-12 lg:px-44 lg:py-16">
+      <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
         <div>
-          <h2 className="text-3xl font-semibold tracking-tight">Gosra.</h2>
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            Gosra.
+          </h2>
 
           <p className="mt-4 max-w-sm text-sm leading-6 text-gray-400">
             Simple conversations. Real connections.
           </p>
         </div>
 
-        <div className="flex gap-20">
+        <div className="flex gap-16 sm:gap-20">
           <div>
             <h3 className="mb-5 text-sm font-medium text-gray-400">Explore</h3>
 

@@ -3,9 +3,6 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { error } from "node:console";
-import { selector } from "gsap";
-import { resourceUsage } from "node:process";
 
 export async function POST(request) {
   try {
@@ -69,7 +66,7 @@ export async function POST(request) {
       );
     }
 
-    const existingFriendship = await prisma.friendShip.findFirst({
+    const existingFriendship = await prisma.friendship.findFirst({
       where: {
         OR: [
           {

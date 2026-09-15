@@ -46,7 +46,7 @@ export async function POST(request) {
       );
     }
 
-    const friendship = await prisma.friendShip.findFirst({
+    const friendship = await prisma.friendship.findFirst({
       where: {
         userId,
         friendId,
@@ -168,8 +168,10 @@ export async function GET() {
 
     const conversations = await prisma.conversation.findMany({
       where: {
-        some: {
-          userId,
+        members: {
+          some: {
+            userId,
+          },
         },
       },
       include: {
@@ -199,9 +201,9 @@ export async function GET() {
           },
         },
 
-        orderBy: {
-          updatedAt: "desc",
-        },
+      },
+      orderBy: {
+        updatedAt: "desc",
       },
     });
 

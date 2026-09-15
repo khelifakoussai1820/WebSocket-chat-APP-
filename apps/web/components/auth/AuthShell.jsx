@@ -132,7 +132,7 @@ export default function AuthShell({ mode }) {
               {isSignup ? "JOIN GOSRA" : "WELCOME BACK"}
             </p>
 
-            <h2 className="mt-2 text-4xl font-semibold tracking-tight text-black">
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-black sm:text-4xl">
               {isSignup ? "Create your account" : "Sign in to Gosra"}
             </h2>
 

@@ -21,12 +21,12 @@ export async function GET() {
 
     const userId = Number(session.user.id);
 
-    const friendships = await friendShip.findMany({
+    const friendships = await prisma.friendship.findMany({
       where: {
         userId,
       },
       include: {
-        fiend: {
+        friend: {
           select: {
             id: true,
             firstName: true,
@@ -47,8 +47,22 @@ export async function GET() {
       email: friendship.friend.email,
     }));
 
+    const requests = await prisma.friendRequest.findMany({
+      where: { receiverId: userId, status: "PENDING" },
+      include: {
+        sender: {
+          select: { id: true, firstName: true, lastName: true, email: true },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
     return NextResponse.json({
       friends,
+      requests: requests.map((request) => ({
+        id: request.id,
+        sender: request.sender,
+      })),
     });
   } catch (error) {
     console.error("GET FRIENDS ERROR : ", error);
