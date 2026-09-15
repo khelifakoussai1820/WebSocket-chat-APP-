@@ -9,9 +9,10 @@ import {
   removeSocketFromAllRooms,
 } from "./handlers/messages.js";
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const wss = new WebSocketServer({
+  host: "0.0.0.0",
   port: PORT,
 });
 
