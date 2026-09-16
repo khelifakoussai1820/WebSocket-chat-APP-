@@ -8,7 +8,6 @@ import {
   broadcastToConversation,
   removeSocketFromAllRooms,
 } from "./handlers/messages.js";
-import { Covered_By_Your_Grace } from "next/font/google/index.js";
 
 const PORT = process.env.PORT || 3001;
 
