@@ -1,5 +1,7 @@
 import { Pool } from "pg";
 
+console.log("DATABASE HOST:", new URL(process.env.DATABASE_URL).hostname);
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
