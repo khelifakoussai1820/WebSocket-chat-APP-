@@ -24,38 +24,63 @@ export default function useWebSocket({ enabled, onMessage }) {
       return undefined;
     }
 
-    console.log("[ws:hook] creating WebSocket →", SOCKET_URL);
-    const socket = new WebSocket(SOCKET_URL);
-    socketRef.current = socket;
+    let cancelled = false;
 
-    socket.onopen = () => {
-      console.log("[ws:hook] socket OPEN");
-      setStatus("connected");
-    };
-    socket.onmessage = (event) => {
+    async function connect() {
       try {
-        onMessageRef.current?.(JSON.parse(event.data));
-      } catch {
-        // Ignore malformed messages so the connection remains usable.
+        console.log("[ws:hook] fetching /api/ws-token…");
+        const response = await fetch("/api/ws-token");
+        const data = await response.json();
+
+        if (!response.ok || !data?.token) {
+          throw new Error(data?.error || "Failed to obtain WebSocket token.");
+        }
+
+        if (cancelled) return;
+
+        const url = `${SOCKET_URL}?token=${encodeURIComponent(data.token)}`;
+
+        console.log("[ws:hook] creating WebSocket →", SOCKET_URL);
+        const socket = new WebSocket(url);
+        socketRef.current = socket;
+
+        socket.onopen = () => {
+          console.log("[ws:hook] socket OPEN");
+          setStatus("connected");
+        };
+        socket.onmessage = (event) => {
+          try {
+            onMessageRef.current?.(JSON.parse(event.data));
+          } catch {
+            // Ignore malformed messages so the connection remains usable.
+          }
+        };
+        socket.onerror = (event) => {
+          console.log("[ws:hook] socket ERROR", event.message ?? event);
+          setStatus("error");
+        };
+        socket.onclose = (event) => {
+          console.log(
+            "[ws:hook] socket CLOSE — code =",
+            event.code,
+            "reason =",
+            event.reason,
+          );
+          setStatus("disconnected");
+        };
+      } catch (error) {
+        if (cancelled) return;
+        console.log("[ws:hook] connection setup FAILED —", error.message ?? error);
+        setStatus("error");
       }
-    };
-    socket.onerror = (event) => {
-      console.log("[ws:hook] socket ERROR", event.message ?? event);
-      setStatus("error");
-    };
-    socket.onclose = (event) => {
-      console.log(
-        "[ws:hook] socket CLOSE — code =",
-        event.code,
-        "reason =",
-        event.reason,
-      );
-      setStatus("disconnected");
-    };
+    }
+
+    connect();
 
     return () => {
+      cancelled = true;
       console.log("[ws:hook] effect CLEANUP — closing socket");
-      socket.close();
+      socketRef.current?.close();
       socketRef.current = null;
     };
   }, [enabled]);
