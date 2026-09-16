@@ -49,6 +49,7 @@ export default function useWebSocket({ enabled, onMessage }) {
           setStatus("connected");
         };
         socket.onmessage = (event) => {
+          console.log("[ws:hook] MESSAGE RECEIVED:", event.data);
           try {
             onMessageRef.current?.(JSON.parse(event.data));
           } catch {
@@ -70,7 +71,10 @@ export default function useWebSocket({ enabled, onMessage }) {
         };
       } catch (error) {
         if (cancelled) return;
-        console.log("[ws:hook] connection setup FAILED —", error.message ?? error);
+        console.log(
+          "[ws:hook] connection setup FAILED —",
+          error.message ?? error,
+        );
         setStatus("error");
       }
     }
