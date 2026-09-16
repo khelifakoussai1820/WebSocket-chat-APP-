@@ -8,6 +8,7 @@ import {
   broadcastToConversation,
   removeSocketFromAllRooms,
 } from "./handlers/messages.js";
+import { Covered_By_Your_Grace } from "next/font/google/index.js";
 
 const PORT = process.env.PORT || 3001;
 
@@ -77,6 +78,19 @@ wss.on("connection", async (socket, request) => {
         );
 
         return;
+      }
+
+      if (message.type === "typing") {
+        const conversationId = Number(message.conversationId);
+
+        if (!Number.isInteger(conversationId) || conversationId <= 0) return;
+
+        broadcastToConversation(conversationId, {
+          type: "typing",
+          conversationId,
+          userId: user.id,
+          isTyping: Boolean(message.isTyping),
+        });
       }
 
       if (message.type === "send_message") {

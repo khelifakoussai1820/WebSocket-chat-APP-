@@ -1,5 +1,6 @@
 "use client";
 
+import { isTypedArray } from "node:util/types";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_WS_URL;
@@ -106,5 +107,15 @@ export default function useWebSocket({ enabled, onMessage }) {
     [send],
   );
 
-  return { status, joinConversation, sendMessage };
+  const sendTyping = useCallback(
+    (conversationId, isTyping) =>
+      send({
+        type: "typing",
+        conversationId,
+        isTyping,
+      }),
+    [send],
+  );
+
+  return { status, joinConversation, sendMessage, sendTyping };
 }
