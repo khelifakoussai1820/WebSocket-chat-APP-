@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const SOCKET_URL = "ws://localhost:3001";
+const SOCKET_URL = process.env.NEXT_PUBLIC_WS_URL;
 
 export default function useWebSocket({ enabled, onMessage }) {
   const socketRef = useRef(null);
@@ -18,7 +18,9 @@ export default function useWebSocket({ enabled, onMessage }) {
   useEffect(() => {
     console.log("[ws:hook] effect RAN — enabled =", enabled);
     if (!enabled) {
-      console.log("[ws:hook] enabled is false → SKIPPING connection (no WebSocket created)");
+      console.log(
+        "[ws:hook] enabled is false → SKIPPING connection (no WebSocket created)",
+      );
       return undefined;
     }
 
@@ -42,7 +44,12 @@ export default function useWebSocket({ enabled, onMessage }) {
       setStatus("error");
     };
     socket.onclose = (event) => {
-      console.log("[ws:hook] socket CLOSE — code =", event.code, "reason =", event.reason);
+      console.log(
+        "[ws:hook] socket CLOSE — code =",
+        event.code,
+        "reason =",
+        event.reason,
+      );
       setStatus("disconnected");
     };
 
@@ -60,8 +67,7 @@ export default function useWebSocket({ enabled, onMessage }) {
   }, []);
 
   const joinConversation = useCallback(
-    (conversationId) =>
-      send({ type: "join_conversation", conversationId }),
+    (conversationId) => send({ type: "join_conversation", conversationId }),
     [send],
   );
 
