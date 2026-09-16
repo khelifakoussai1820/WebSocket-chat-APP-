@@ -17,6 +17,7 @@ const wss = new WebSocketServer({
 });
 
 wss.on("connection", async (socket, request) => {
+  console.log("WEBSOCKET CONNECTION RECEIVED");
   const user = await authenticateSocket(request);
 
   if (!user) {
