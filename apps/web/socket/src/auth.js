@@ -32,7 +32,13 @@ function parseCookies(header) {
 export async function authenticateSocket(request) {
   const cookieHeader = Array.isArray(request.headers?.cookie)
     ? request.headers.cookie.join("; ")
-    : request.headers?.cookie ?? "";
+    : (request.headers?.cookie ?? "");
+
+  console.log("WS COOKIE HEADER:", cookieHeader);
+  console.log(
+    "WS AUTH SECRET EXISTS:",
+    Boolean(process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET),
+  );
 
   const token = await getToken({
     req: {
@@ -41,6 +47,8 @@ export async function authenticateSocket(request) {
     },
     secret: process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET,
   });
+
+  console.log("WS TOKEN:", token ? "FOUND" : "NOT FOUND");
 
   if (!token?.id) {
     return null;
