@@ -545,46 +545,6 @@ WebSocket server:
 wss://websocket-chat-app-909t.onrender.com
 ```
 
-## Troubleshooting
-
-### Prisma error: `P1001`
-
-```text
-Can't reach database server
-```
-
-Check that:
-
-* `DATABASE_URL` is correct.
-* The Neon database is running.
-* The complete connection string was copied.
-* The environment variable was added to the correct deployment environment.
-* The application was redeployed after changing the variable.
-
-### OTP email is not received
-
-Check that:
-
-* `GMAIL_USER` exists in the deployment environment.
-* `GMAIL_APP_PASSWORD` exists in the deployment environment.
-* The App Password is correct.
-* 2-Step Verification is enabled.
-* The application was redeployed after adding the variables.
-* Vercel Runtime Logs contain no Nodemailer or SMTP error.
-
-### WebSocket connection fails
-
-Check that:
-
-* `NEXT_PUBLIC_WS_URL` uses `wss://` in production.
-* The Render WebSocket service is running.
-* The Render service has the correct `NEXTAUTH_SECRET`.
-* The frontend was redeployed after changing the WebSocket URL.
-* The browser console and Render logs contain no authentication or connection errors.
-
-### SSL warning from PostgreSQL
-
-A warning about PostgreSQL SSL modes is not necessarily a fatal error. Look for the actual error after the warning. Database connection errors such as `P1001` are the important messages to investigate.
 
 ## Security Notes
 
