@@ -594,8 +594,6 @@ A warning about PostgreSQL SSL modes is not necessarily a fatal error. Look for 
 * Users cannot send messages to conversations they are not members of.
 * Friend requests prevent self-requests.
 * OTP codes expire after a limited period.
-* Secrets must be stored in environment variables.
-* Production credentials must never be committed to Git.
 
 ## Future Improvements
 
